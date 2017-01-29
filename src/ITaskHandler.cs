@@ -14,7 +14,8 @@ namespace Flake
         /// </summary>
         /// <returns>A parsed task.</returns>
         /// <param name="Object">The object to parse.</param>
-        ITask Parse(JObject Object);
+        /// <param name="Parser">The project parser.</param>
+        ITask Parse(JObject Object, ProjectParser Parser);
     }
 }
 

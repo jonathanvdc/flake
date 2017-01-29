@@ -20,7 +20,7 @@ namespace Flake
             new SerializedTaskHandler<T>();
 
         /// <inheritdoc/>
-        public ITask Parse(JObject Object)
+        public ITask Parse(JObject Object, ProjectParser Parser)
         {
             return Object.ToObject<T>();
         }
