@@ -43,6 +43,7 @@
     <Compile Include="SerializedTaskHandler.cs" />
     <Compile Include="TaskIdentifier.cs" />
     <Compile Include="ProjectIdentifier.cs" />
+    <Compile Include="Project.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
