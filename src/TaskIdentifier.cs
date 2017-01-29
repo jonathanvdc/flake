@@ -36,7 +36,7 @@ namespace Flake
         public static bool operator ==(
             TaskIdentifier First, TaskIdentifier Second)
         {
-            return First.Equals(Second);
+            return object.Equals(First, Second);
         }
 
         /// <param name="First">The first task identifier.</param>
@@ -44,7 +44,7 @@ namespace Flake
         public static bool operator !=(
             TaskIdentifier First, TaskIdentifier Second)
         {
-            return !First.Equals(Second);
+            return !object.Equals(First, Second);
         }
 
         /// <summary>

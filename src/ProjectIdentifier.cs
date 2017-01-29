@@ -41,7 +41,7 @@ namespace Flake
         public static bool operator ==(
             ProjectIdentifier First, ProjectIdentifier Second)
         {
-            return First.Equals(Second);
+            return object.Equals(First, Second);
         }
 
         /// <param name="First">The first project identifier.</param>
@@ -49,7 +49,7 @@ namespace Flake
         public static bool operator !=(
             ProjectIdentifier First, ProjectIdentifier Second)
         {
-            return !First.Equals(Second);
+            return !object.Equals(First, Second);
         }
 
         /// <summary>
