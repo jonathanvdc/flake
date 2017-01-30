@@ -149,6 +149,8 @@
     <Compile Include="Extensibility\IExtensionProvider.cs" />
     <Compile Include="Extensibility\ExtensionManifest.cs" />
     <Compile Include="Extensibility\ExtensionBuilder.cs" />
+    <Compile Include="Providers\SingleCommandProvider.cs" />
+    <Compile Include="Providers\SingleTaskHandlerProvider.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
