@@ -194,8 +194,18 @@ namespace Flake
             Dictionary<string, JObject> dict;
             using (var reader = Identifier.File.OpenText())
             {
-                dict = jsonReader.Deserialize<Dictionary<string, JObject>>(
-                    new JsonTextReader(reader));
+                try
+                {
+                    dict = jsonReader.Deserialize<Dictionary<string, JObject>>(
+                        new JsonTextReader(reader));
+                }
+                catch (JsonSerializationException)
+                {
+                    return ResultOrError<Project, LogEntry>.CreateError(
+                        new LogEntry(
+                            "malformed project file",
+                            "project file '" + Identifier.ToString() + "' cannot be read."));
+                }
             }
 
             var tasks = new Dictionary<string, ITask>();
