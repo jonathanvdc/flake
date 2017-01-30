@@ -140,11 +140,11 @@ namespace Flake.Driver
         /// <returns>The default project identifier.</returns>
         public static ProjectIdentifier TryFindDefaultProject()
         {
-            var projIdent = ProjectParser.GetIdentifier("flakefile");
+            var projIdent = ProjectParser.GetIdentifier("flake.json");
             if (!projIdent.IsError && projIdent.ResultOrDefault.File.Exists)
                 return projIdent.ResultOrDefault;
 
-            projIdent = ProjectParser.GetIdentifier("Flakefile");
+            projIdent = ProjectParser.GetIdentifier("Flake.json");
             if (!projIdent.IsError && projIdent.ResultOrDefault.File.Exists)
                 return projIdent.ResultOrDefault;
             else
