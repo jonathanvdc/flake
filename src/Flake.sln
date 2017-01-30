@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flake", "Flake.csproj", "{330032FC-926E-4EBE-88E3-EA87CBC2F070}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flake", "Flake\Flake.csproj", "{330032FC-926E-4EBE-88E3-EA87CBC2F070}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flake.Driver", "Flake.Driver\Flake.Driver.csproj", "{45619921-F97B-4F87-96D8-10CF5F138963}"
 EndProject

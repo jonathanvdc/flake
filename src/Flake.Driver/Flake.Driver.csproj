@@ -38,7 +38,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\Flake.csproj">
+    <ProjectReference Include="..\Flake\Flake.csproj">
       <Project>{330032FC-926E-4EBE-88E3-EA87CBC2F070}</Project>
       <Name>Flake</Name>
     </ProjectReference>
