@@ -36,21 +36,6 @@ namespace Flake
         private JsonSerializer jsonReader;
 
         /// <summary>
-        /// Parses the project at the given project path.
-        /// </summary>
-        /// <param name="ProjectPath">
-        /// The project path to parse a project at.
-        /// </param>
-        /// <param name="BasePath">
-        /// The path to which the project path is relative.
-        /// </param>
-        public ResultOrError<Project, LogEntry> Parse(
-            string ProjectPath, string BasePath)
-        {
-            return GetIdentifier(ProjectPath, BasePath).BindResult(Parse);
-        }
-
-        /// <summary>
         /// Creates a task identifier from the given project path
         /// and task name. 
         /// </summary>
@@ -60,7 +45,7 @@ namespace Flake
         /// The path to which the project path is relative.
         /// </param>
         /// <param name="TaskName">The task's name.</param>
-        public ResultOrError<TaskIdentifier, LogEntry> GetIdentifier(
+        public static ResultOrError<TaskIdentifier, LogEntry> GetIdentifier(
             string ProjectPath, string BasePath, string TaskName)
         {
             return GetIdentifier(ProjectPath, BasePath).MapResult(
@@ -75,14 +60,14 @@ namespace Flake
         /// The path to which the project path is relative.
         /// </param>
         /// <param name="ProjectPath">The project path.</param>
-        public ResultOrError<ProjectIdentifier, LogEntry> GetIdentifier(
+        public static ResultOrError<ProjectIdentifier, LogEntry> GetIdentifier(
             string ProjectPath, string BasePath)
         {
             return GetFileInfo(ProjectPath, BasePath).MapResult(
                 info => new ProjectIdentifier(info));
         }
 
-        private ResultOrError<FileInfo, LogEntry> GetFileInfo(
+        private static ResultOrError<FileInfo, LogEntry> GetFileInfo(
             string ProjectPath, string BasePath)
         {
             ResultOrError<FileInfo, LogEntry> result;
@@ -145,10 +130,25 @@ namespace Flake
         /// <returns>The task identifier.</returns>
         /// <param name="Identifier">The project's identifier.</param>
         /// <param name="TaskName">The task's name.</param>
-        public TaskIdentifier GetIdentifier(
+        public static TaskIdentifier GetIdentifier(
             ProjectIdentifier Identifier, string TaskName)
         {
             return new TaskIdentifier(Identifier, TaskName);
+        }
+
+        /// <summary>
+        /// Parses the project at the given project path.
+        /// </summary>
+        /// <param name="ProjectPath">
+        /// The project path to parse a project at.
+        /// </param>
+        /// <param name="BasePath">
+        /// The path to which the project path is relative.
+        /// </param>
+        public ResultOrError<Project, LogEntry> Parse(
+            string ProjectPath, string BasePath)
+        {
+            return GetIdentifier(ProjectPath, BasePath).BindResult(Parse);
         }
 
         /// <summary>
