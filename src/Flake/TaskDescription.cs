@@ -45,6 +45,10 @@ namespace Flake
         /// <value><c>true</c> if this task description includes a package; otherwise, <c>false</c>.</value>
         public bool HasPackage { get { return Package != null; } }
 
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents the current <see cref="Flake.TaskDescription"/>.
+        /// </summary>
+        /// <returns>A <see cref="System.String"/> that represents the current <see cref="Flake.TaskDescription"/>.</returns>
         public override string ToString()
         {
             if (HasPackage)
