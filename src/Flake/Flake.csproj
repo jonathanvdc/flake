@@ -137,6 +137,7 @@
     <Compile Include="TaskResult.cs" />
     <Compile Include="TaskState.cs" />
     <Compile Include="TaskStateBuilder.cs" />
+    <Compile Include="ICommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
