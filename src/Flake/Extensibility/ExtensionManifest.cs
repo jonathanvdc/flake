@@ -104,6 +104,16 @@ namespace Flake.Extensibility
         }
 
         /// <summary>
+        /// Tells if this extension manifest contains the 
+        /// given extension name.
+        /// </summary>
+        /// <param name="ExtensionName">The extension name.</param>
+        public bool Contains(string ExtensionName)
+        {
+            return extensionPaths.ContainsKey(ExtensionName);
+        }
+
+        /// <summary>
         /// Registers the providers of the extension with
         /// the given path in the manifest.
         /// </summary>
