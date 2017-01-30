@@ -128,9 +128,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ClrExtensionProvider.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Flake\Flake.csproj">
+      <Project>{330032FC-926E-4EBE-88E3-EA87CBC2F070}</Project>
+      <Name>Flake</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
