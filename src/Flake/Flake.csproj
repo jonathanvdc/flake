@@ -138,9 +138,13 @@
     <Compile Include="TaskState.cs" />
     <Compile Include="TaskStateBuilder.cs" />
     <Compile Include="ICommand.cs" />
+    <Compile Include="ICommandProvider.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Commands\" />
   </ItemGroup>
 </Project>

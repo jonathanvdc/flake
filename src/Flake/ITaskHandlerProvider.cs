@@ -5,7 +5,7 @@ namespace Flake
 {
     /// <summary>
     /// Defines common functionality for objects that create
-    /// task handlers based for specific task types. 
+    /// task handlers based on their task types. 
     /// </summary>
     public interface ITaskHandlerProvider
     {

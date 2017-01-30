@@ -67,13 +67,26 @@ namespace Flake
                 info => new ProjectIdentifier(info));
         }
 
+        /// <summary>
+        /// Creates a project identifier from the given project path.
+        /// </summary>
+        /// <returns>The project identifier.</returns>
+        /// <param name="ProjectPath">The project path.</param>
+        public static ResultOrError<ProjectIdentifier, LogEntry> GetIdentifier(
+            string ProjectPath)
+        {
+            return GetIdentifier(ProjectPath, null);
+        }
+
         private static ResultOrError<FileInfo, LogEntry> GetFileInfo(
             string ProjectPath, string BasePath)
         {
             ResultOrError<FileInfo, LogEntry> result;
             try
             {
-                string absPath = new PathIdentifier(ProjectPath, BasePath).AbsolutePath.Path;
+                string absPath = BasePath == null 
+                    ? ProjectPath
+                    : new PathIdentifier(ProjectPath, BasePath).AbsolutePath.Path;
                 result = ResultOrError<FileInfo, LogEntry>.CreateResult(
                     new FileInfo(absPath));
             }
