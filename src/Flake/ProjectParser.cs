@@ -21,8 +21,6 @@ namespace Flake
         public ProjectParser(ITaskHandlerProvider HandlerProvider)
         {
             this.HandlerProvider = HandlerProvider;
-            this.projectIdentifierCache = 
-                new Dictionary<string, ResultOrError<ProjectIdentifier, LogEntry>>();
             this.projectCache = 
                 new Dictionary<ProjectIdentifier, ResultOrError<Project, LogEntry>>();
             this.jsonReader = new JsonSerializer();
@@ -34,7 +32,6 @@ namespace Flake
         /// <value>The task handler provider.</value>
         public ITaskHandlerProvider HandlerProvider { get; private set; }
 
-        private Dictionary<string, ResultOrError<ProjectIdentifier, LogEntry>> projectIdentifierCache;
         private Dictionary<ProjectIdentifier, ResultOrError<Project, LogEntry>> projectCache;
         private JsonSerializer jsonReader;
 
@@ -81,15 +78,8 @@ namespace Flake
         public ResultOrError<ProjectIdentifier, LogEntry> GetIdentifier(
             string ProjectPath, string BasePath)
         {
-            ResultOrError<ProjectIdentifier, LogEntry> result;
-            if (!projectIdentifierCache.TryGetValue(
-                ProjectPath, out result))
-            {
-                result = GetFileInfo(ProjectPath, BasePath).MapResult(
-                    info => new ProjectIdentifier(info));
-            }
-
-            return result;
+            return GetFileInfo(ProjectPath, BasePath).MapResult(
+                info => new ProjectIdentifier(info));
         }
 
         private ResultOrError<FileInfo, LogEntry> GetFileInfo(
