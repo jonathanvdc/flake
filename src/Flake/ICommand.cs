@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Flame.Compiler;
 
 namespace Flake
@@ -20,7 +21,7 @@ namespace Flake
         /// </summary>
         /// <param name="Arguments">The command's arguments.</param>
         /// <param name="Log">The log to which diagnostics can be sent.</param>
-        void Run(string[] Arguments, ICompilerLog Log);
+        void Run(IReadOnlyList<string> Arguments, ICompilerLog Log);
     }
 }
 
