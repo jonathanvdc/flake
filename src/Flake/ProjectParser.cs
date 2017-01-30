@@ -228,7 +228,7 @@ namespace Flake
         private static bool TryGetStringProperty(JObject Obj, string Key, out string Value)
         {
             JToken typeToken;
-            if (Obj.TryGetValue(TypePropertyName, out typeToken))
+            if (Obj.TryGetValue(Key, out typeToken))
             {
                 Value = typeToken.Value<string>();
                 return true;
