@@ -210,23 +210,53 @@ namespace Flake
         }
 
         private const string TypePropertyName = "type";
+        private const string PackagePropertyName = "package";
 
-        private ResultOrError<ITask, LogEntry> ParseTask(
-            TaskIdentifier Identifier, JObject Obj)
+        private static bool TryGetStringProperty(JObject Obj, string Key, out string Value)
         {
             JToken typeToken;
-            if (!Obj.TryGetValue(TypePropertyName, out typeToken))
+            if (Obj.TryGetValue(TypePropertyName, out typeToken))
             {
-                return ResultOrError<ITask, LogEntry>.CreateError(
+                Value = typeToken.Value<string>();
+                return true;
+            }
+            else
+            {
+                Value = null;
+                return false;
+            }
+        }
+
+        private static string GetStringPropertyOrNull(JObject Obj, string Key)
+        {
+            string result;
+            TryGetStringProperty(Obj, Key, out result);
+            return result;
+        }
+
+        private ResultOrError<ITaskHandler, LogEntry> GetTaskHandler(
+            TaskIdentifier Identifier, JObject Obj)
+        {
+            string type;
+            if (!TryGetStringProperty(Obj, TypePropertyName, out type))
+            {
+                return ResultOrError<ITaskHandler, LogEntry>.CreateError(
                     new LogEntry(
                         "invalid task specification",
                         "task '" + Identifier.ToString() + 
                         "' does not have a 'type' property."));
             }
 
-            string type = typeToken.Value<string>();
+            string package = GetStringPropertyOrNull(Obj, PackagePropertyName);
 
-            var handler = HandlerProvider.GetHandler(type);
+            var desc = new TaskDescription(type, package);
+            return HandlerProvider.GetHandler(desc);
+        }
+
+        private ResultOrError<ITask, LogEntry> ParseTask(
+            TaskIdentifier Identifier, JObject Obj)
+        {
+            var handler = GetTaskHandler(Identifier, Obj);
             if (handler.IsError)
             {
                 return ResultOrError<ITask, LogEntry>.CreateError(

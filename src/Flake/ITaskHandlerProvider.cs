@@ -12,9 +12,9 @@ namespace Flake
         /// <summary>
         /// Tries to find a handler for the given type of task.
         /// </summary>
-        /// <param name="TaskType">The type of task.</param>
+        /// <param name="Description">The task type's description</param>
         /// <returns>The task handler, or an error.</returns>
-        ResultOrError<ITaskHandler, LogEntry> GetHandler(string TaskType);
+        ResultOrError<ITaskHandler, LogEntry> GetHandler(TaskDescription Description);
     }
 }
 

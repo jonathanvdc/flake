@@ -34,6 +34,7 @@
     <Reference Include="System" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Package>monodevelop</Package>
     </Reference>
     <Reference Include="Flame">
       <HintPath>packages\Flame.Compiler.0.9.4\lib\net45\Flame.dll</HintPath>
@@ -49,6 +50,7 @@
     </Reference>
     <Reference Include="Mono.Cecil">
       <HintPath>packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.dll</HintPath>
+      <Package>monodevelop</Package>
     </Reference>
     <Reference Include="Mono.Cecil.Mdb">
       <HintPath>packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.Mdb.dll</HintPath>
@@ -131,6 +133,7 @@
     <Compile Include="ProjectParser.cs" />
     <Compile Include="ResultOrError.cs" />
     <Compile Include="ITaskHandlerProvider.cs" />
+    <Compile Include="TaskDescription.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
