@@ -141,9 +141,10 @@
     <Compile Include="ICommandProvider.cs" />
     <Compile Include="Commands\RunTaskCommand.cs" />
     <Compile Include="Graph.cs" />
-    <Compile Include="Extensibility\FlakeImport.cs" />
     <Compile Include="Providers\EmptyCommandProvider.cs" />
     <Compile Include="Providers\EmptyTaskHandlerProvider.cs" />
+    <Compile Include="Extensibility\Extension.cs" />
+    <Compile Include="Extensibility\FlakeImportAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
