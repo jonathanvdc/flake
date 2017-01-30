@@ -10,6 +10,12 @@ namespace Flake
     public interface ITaskHandler
     {
         /// <summary>
+        /// Gets this task handler's task type.
+        /// </summary>
+        /// <value>The task type.</value>
+        string TaskType { get; }
+
+        /// <summary>
         /// Parses the given JSON object as a task.
         /// </summary>
         /// <returns>A parsed task.</returns>

@@ -44,6 +44,18 @@ namespace Flake
         /// </summary>
         /// <value><c>true</c> if this task description includes a package; otherwise, <c>false</c>.</value>
         public bool HasPackage { get { return Package != null; } }
+
+        public override string ToString()
+        {
+            if (HasPackage)
+            {
+                return Type + " (from " + Package + ")";
+            }
+            else
+            {
+                return Type;
+            }
+        }
     }
 }
 

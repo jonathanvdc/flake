@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flake", "Flake\Flake.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flake.Driver", "Flake.Driver\Flake.Driver.csproj", "{45619921-F97B-4F87-96D8-10CF5F138963}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flake.Echo", "Flake.Echo\Flake.Echo.csproj", "{BD4D9137-D2FC-4A77-BA9F-791EE9549F34}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -19,5 +21,9 @@ Global
 		{45619921-F97B-4F87-96D8-10CF5F138963}.Debug|x86.Build.0 = Debug|x86
 		{45619921-F97B-4F87-96D8-10CF5F138963}.Release|x86.ActiveCfg = Release|x86
 		{45619921-F97B-4F87-96D8-10CF5F138963}.Release|x86.Build.0 = Release|x86
+		{BD4D9137-D2FC-4A77-BA9F-791EE9549F34}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BD4D9137-D2FC-4A77-BA9F-791EE9549F34}.Debug|x86.Build.0 = Debug|Any CPU
+		{BD4D9137-D2FC-4A77-BA9F-791EE9549F34}.Release|x86.ActiveCfg = Release|Any CPU
+		{BD4D9137-D2FC-4A77-BA9F-791EE9549F34}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

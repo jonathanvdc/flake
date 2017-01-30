@@ -21,6 +21,11 @@ namespace Flake
         private IReadOnlyDictionary<string, object> results;
 
         /// <summary>
+        /// The empty task result.
+        /// </summary>
+        public static readonly TaskResult Empty = new TaskResult(new Dictionary<string, object>()); 
+
+        /// <summary>
         /// Tries to get the value with the given key and value.
         /// </summary>
         /// <returns><c>true</c>, if a value for the given key was found, <c>false</c> otherwise.</returns>

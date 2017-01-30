@@ -141,7 +141,7 @@ namespace Flake.Commands
             while (Tasks.Count > 0)
             {
                 TaskIdentifier tSpec;
-                if (!TryPopDependencySatisfiedTask(
+                if (!TryPopDependencySatisfiedTask<TaskIdentifier>(
                     DependencyGraph, out tSpec))
                 {
                     Log.LogError(new LogEntry(
@@ -167,9 +167,11 @@ namespace Flake.Commands
         /// Tries to pop a task from the given dependency graph that
         /// has all of its dependencies satisfied.
         /// </summary>
-        private static bool TryPopDependencySatisfiedTask(
-            Graph<TaskIdentifier> DependencyGraph,
-            out TaskIdentifier TaskSpec)
+        /// <param name="DependencyGraph">The dependency graph.</param>
+        /// <param name="TaskSpec">The resulting task specification, if any.</param>
+        public static bool TryPopDependencySatisfiedTask<T>(
+            Graph<T> DependencyGraph,
+            out T TaskSpec)
         {
             foreach (var v in DependencyGraph.Vertices)
             {
@@ -180,7 +182,7 @@ namespace Flake.Commands
                     return true;
                 }
             }
-            TaskSpec = default(TaskIdentifier);
+            TaskSpec = default(T);
             return false;
         }
     }

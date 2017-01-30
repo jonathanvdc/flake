@@ -10,14 +10,17 @@ namespace Flake
     public sealed class SerializedTaskHandler<T> : ITaskHandler
         where T : ITask, new()
     {
-        private SerializedTaskHandler() 
-        { }
-
         /// <summary>
-        /// The serialized task handler's instance for this type.
+        /// Initializes a new instance of the <see cref="Flake.SerializedTaskHandler&lt;T&gt;"/> class.
         /// </summary>
-        public static readonly SerializedTaskHandler<T> Instance = 
-            new SerializedTaskHandler<T>();
+        /// <param name="TaskType">The type of tasks that is handled.</param>
+        public SerializedTaskHandler(string TaskType) 
+        {
+            this.TaskType = TaskType;
+        }
+
+        /// <inheritdoc/>
+        public string TaskType { get; private set; }
 
         /// <inheritdoc/>
         public ITask Parse(JObject Object, ProjectParser Parser)

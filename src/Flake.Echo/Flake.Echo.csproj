@@ -2,14 +2,14 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{45619921-F97B-4F87-96D8-10CF5F138963}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Flake.Driver</RootNamespace>
-    <AssemblyName>Flake.Driver</AssemblyName>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BD4D9137-D2FC-4A77-BA9F-791EE9549F34}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Flake.Echo</RootNamespace>
+    <AssemblyName>Flake.Echo</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -17,17 +17,15 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Externalconsole>true</Externalconsole>
-    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Externalconsole>true</Externalconsole>
-    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -39,9 +37,6 @@
     </Reference>
     <Reference Include="Loyc.Syntax">
       <HintPath>..\packages\Loyc.Syntax.24.3.0\lib\net45\Loyc.Syntax.dll</HintPath>
-    </Reference>
-    <Reference Include="Loyc.Binary">
-      <HintPath>..\packages\Loyc.Binary.0.1.8\lib\net45\Loyc.Binary.dll</HintPath>
     </Reference>
     <Reference Include="Flame">
       <HintPath>..\packages\Flame.Compiler.0.9.4\lib\net45\Flame.dll</HintPath>
@@ -69,6 +64,9 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Loyc.Binary">
+      <HintPath>..\packages\Loyc.Binary.0.1.8\lib\net45\Loyc.Binary.dll</HintPath>
     </Reference>
     <Reference Include="Flame.Analysis">
       <HintPath>..\packages\Flame.Front.0.9.4\lib\net45\Flame.Analysis.dll</HintPath>
@@ -129,9 +127,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CommandParser.cs" />
+    <Compile Include="EchoCommand.cs" />
+    <Compile Include="EchoTask.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
