@@ -19,7 +19,8 @@ namespace Flake.Providers
             new EmptyTaskHandlerProvider();
 
         /// <inheritdoc/>
-        public ResultOrError<ITaskHandler, LogEntry> GetHandler(TaskDescription Description)
+        public ResultOrError<ITaskHandler, LogEntry> GetHandler(
+            TaskDescription Description, ICompilerLog Log)
         {
             return ResultOrError<ITaskHandler, LogEntry>.CreateError(
                 new LogEntry(

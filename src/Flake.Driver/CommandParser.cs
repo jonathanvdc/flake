@@ -16,10 +16,12 @@ namespace Flake.Driver
         /// <param name="TaskHandlerProvider">The task handler provider.</param>
         public CommandParser(
             ICommandProvider CommandProvider,
-            ITaskHandlerProvider TaskHandlerProvider)
+            ITaskHandlerProvider TaskHandlerProvider,
+            ICompilerLog Log)
         {
             this.CommandProvider = CommandProvider;
             this.TaskHandlerProvider = TaskHandlerProvider;
+            this.Log = Log;
         }
 
         /// <summary>
@@ -33,6 +35,12 @@ namespace Flake.Driver
         /// </summary>
         /// <value>The task handler provider.</value>
         public ITaskHandlerProvider TaskHandlerProvider { get; private set; }
+
+        /// <summary>
+        /// Gets the log for this command parser.
+        /// </summary>
+        /// <value>The log.</value>
+        public ICompilerLog Log { get; private set; }
 
         /// <summary>
         /// Parses a command spec, which may consist of either a filename 
@@ -116,7 +124,7 @@ namespace Flake.Driver
         /// <param name="CommandName">The command name.</param>
         public ResultOrError<ICommand, LogEntry> ParseCommandSpec(string CommandName)
         {
-            return CommandProvider.GetCommand(CommandName);
+            return CommandProvider.GetCommand(CommandName, Log);
         }
 
         /// <summary>

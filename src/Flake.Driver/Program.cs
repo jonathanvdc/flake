@@ -28,7 +28,8 @@ namespace Flake.Driver
 
             var commandParser = new CommandParser(
                 Flake.Providers.EmptyCommandProvider.Instance, 
-                Flake.Providers.EmptyTaskHandlerProvider.Instance);
+                Flake.Providers.EmptyTaskHandlerProvider.Instance,
+                log);
             
             var commandSpecResult = commandParser.ParseCommandSpec(
                 commandOrFilename, maybeCommand, out isTwoWordCommand);

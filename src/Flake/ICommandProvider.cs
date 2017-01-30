@@ -10,11 +10,13 @@ namespace Flake
     public interface ICommandProvider
     {
         /// <summary>
-        /// Tries to find a command for the given type of command.
+        /// Tries to find a command with the given type.
         /// </summary>
         /// <param name="Name">The command's name</param>
+        /// <param name="Log">The log to which diagnostics may be sent.</param>
         /// <returns>The command, or an error.</returns>
-        ResultOrError<ICommand, LogEntry> GetCommand(string Name);
+        ResultOrError<ICommand, LogEntry> GetCommand(
+            string Name, ICompilerLog Log);
     }
 }
 

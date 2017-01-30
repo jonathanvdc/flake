@@ -145,6 +145,8 @@
     <Compile Include="Providers\EmptyTaskHandlerProvider.cs" />
     <Compile Include="Extensibility\Extension.cs" />
     <Compile Include="Extensibility\FlakeImportAttribute.cs" />
+    <Compile Include="Extensibility\ExtensionManager.cs" />
+    <Compile Include="Extensibility\IExtensionProvider.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

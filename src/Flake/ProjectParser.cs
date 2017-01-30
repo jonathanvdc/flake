@@ -18,9 +18,11 @@ namespace Flake
         /// Initializes a new instance of the <see cref="Flake.ProjectParser"/> class.
         /// </summary>
         /// <param name="HandlerProvider">The task handler provider for this project parser.</param>
-        public ProjectParser(ITaskHandlerProvider HandlerProvider)
+        /// <param name="Log">The project parser's log.</param>
+        public ProjectParser(ITaskHandlerProvider HandlerProvider, ICompilerLog Log)
         {
             this.HandlerProvider = HandlerProvider;
+            this.Log = Log;
             this.projectCache = 
                 new Dictionary<ProjectIdentifier, ResultOrError<Project, LogEntry>>();
             this.jsonReader = new JsonSerializer();
@@ -31,6 +33,12 @@ namespace Flake
         /// </summary>
         /// <value>The task handler provider.</value>
         public ITaskHandlerProvider HandlerProvider { get; private set; }
+
+        /// <summary>
+        /// Gets the log for this project parser.
+        /// </summary>
+        /// <value>The log.</value>
+        public ICompilerLog Log { get; private set; }
 
         private Dictionary<ProjectIdentifier, ResultOrError<Project, LogEntry>> projectCache;
         private JsonSerializer jsonReader;
@@ -175,6 +183,7 @@ namespace Flake
             if (!projectCache.TryGetValue(Identifier, out result))
             {
                 result = ParseProject(Identifier);
+                projectCache[Identifier] = result;
             }
 
             return result;
@@ -263,7 +272,7 @@ namespace Flake
             string package = GetStringPropertyOrNull(Obj, PackagePropertyName);
 
             var desc = new TaskDescription(type, package);
-            return HandlerProvider.GetHandler(desc);
+            return HandlerProvider.GetHandler(desc, Log);
         }
 
         private ResultOrError<ITask, LogEntry> ParseTask(

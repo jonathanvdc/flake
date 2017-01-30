@@ -19,7 +19,8 @@ namespace Flake.Providers
             new EmptyCommandProvider();
 
         /// <inheritdoc/>
-        public ResultOrError<ICommand, LogEntry> GetCommand(string Name)
+        public ResultOrError<ICommand, LogEntry> GetCommand(
+            string Name, ICompilerLog Log)
         {
             return ResultOrError<ICommand, LogEntry>.CreateError(
                 new LogEntry(

@@ -78,7 +78,7 @@ namespace Flake.Commands
                 spec = TaskSpec;
             }
 
-            var parser = new ProjectParser(TaskHandlerProvider);
+            var parser = new ProjectParser(TaskHandlerProvider, Log);
             var dependencyGraph = new Graph<TaskIdentifier>();
             var tasks = new Dictionary<TaskIdentifier, ITask>();
 
