@@ -33,6 +33,7 @@ namespace Flake.Echo
         /// Gets the line of text to print.
         /// </summary>
         /// <value>The text to print.</value>
+        [JsonProperty("text")]
         public string Text { get; private set; }
 
         /// <summary>
