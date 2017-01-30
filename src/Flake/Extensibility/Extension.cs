@@ -12,18 +12,28 @@ namespace Flake.Extensibility
         /// Initializes a new instance of the <see cref="Flake.Extensibility.Extension"/> class.
         /// </summary>
         /// <param name="Name">The extension's name.</param>
-        /// <param name="CommandProviders">The set of command providers.</param>
-        /// <param name="TaskHandlerProviders">The set of task handler providers.</param>
+        /// <param name="SpecificCommandProviders">
+        /// A mapping from specific command names to command providers.
+        /// </param>        
+        /// <param name="SpecificTaskHandlerProviders">
+        /// A mapping from specific task types to task handler providers.
+        /// </param>
+        /// <param name="GeneralCommandProviders">The set of command providers.</param>
+        /// <param name="GeneralTaskHandlerProviders">The set of task handler providers.</param>
         /// <param name="ExtensionProviders">The set of extension providers.</param>
         public Extension(
             string Name,
-            IEnumerable<ICommandProvider> CommandProviders,
-            IEnumerable<ITaskHandlerProvider> TaskHandlerProviders,
+            IReadOnlyDictionary<string, ICommandProvider> SpecificCommandProviders,
+            IReadOnlyDictionary<string, ITaskHandlerProvider> SpecificTaskHandlerProviders,
+            IEnumerable<ICommandProvider> GeneralCommandProviders,
+            IEnumerable<ITaskHandlerProvider> GeneralTaskHandlerProviders,
             IEnumerable<IExtensionProvider> ExtensionProviders)
         {
             this.Name = Name;
-            this.CommandProviders = CommandProviders;
-            this.TaskHandlerProviders = TaskHandlerProviders;
+            this.SpecificCommandProviders = SpecificCommandProviders;
+            this.SpecificTaskHandlerProviders = SpecificTaskHandlerProviders;
+            this.GeneralCommandProviders = GeneralCommandProviders;
+            this.GeneralTaskHandlerProviders = GeneralTaskHandlerProviders;
             this.ExtensionProviders = ExtensionProviders;
         }
 
@@ -34,16 +44,30 @@ namespace Flake.Extensibility
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the extension's set of command providers.
+        /// Gets a mapping from specific command names to 
+        /// command providers in the extension.
         /// </summary>
-        /// <value>The set of command providers.</value>
-        public IEnumerable<ICommandProvider> CommandProviders { get; private set; }
+        /// <value>The specific command providers.</value>
+        public IReadOnlyDictionary<string, ICommandProvider> SpecificCommandProviders { get; private set; }
 
         /// <summary>
-        /// Gets the extension's set of task handler providers.
+        /// Gets a mapping from specific task types to 
+        /// task handler providers in the extension.
         /// </summary>
-        /// <value>The set of task handler providers.</value>
-        public IEnumerable<ITaskHandlerProvider> TaskHandlerProviders { get; private set; }
+        /// <value>The specific task handler providers.</value>
+        public IReadOnlyDictionary<string, ITaskHandlerProvider> SpecificTaskHandlerProviders { get; private set; }
+
+        /// <summary>
+        /// Gets the extension's set of general command providers.
+        /// </summary>
+        /// <value>The set of general command providers.</value>
+        public IEnumerable<ICommandProvider> GeneralCommandProviders { get; private set; }
+
+        /// <summary>
+        /// Gets the extension's set of general task handler providers.
+        /// </summary>
+        /// <value>The set of general task handler providers.</value>
+        public IEnumerable<ITaskHandlerProvider> GeneralTaskHandlerProviders { get; private set; }
 
         /// <summary>
         /// Gets the extension's set of extension providers.

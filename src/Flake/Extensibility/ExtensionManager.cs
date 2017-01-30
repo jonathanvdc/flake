@@ -19,6 +19,8 @@ namespace Flake.Extensibility
         {
             this.cachedExtensions = new Dictionary<string, ResultOrError<Extension, LogEntry>>();
             this.loadedExtensionNames = new HashSet<string>();
+            this.specificCommandProviders = new Dictionary<string, ICommandProvider>();
+            this.specificTaskProviders = new Dictionary<string, ITaskHandlerProvider>();
             this.commandProviders = new List<ICommandProvider>();
             this.taskHandlerProviders = new List<ITaskHandlerProvider>();
             this.extensionProviders = new List<IExtensionProvider>();
@@ -26,6 +28,8 @@ namespace Flake.Extensibility
 
         private Dictionary<string, ResultOrError<Extension, LogEntry>> cachedExtensions;
         private HashSet<string> loadedExtensionNames;
+        private Dictionary<string, ICommandProvider> specificCommandProviders;
+        private Dictionary<string, ITaskHandlerProvider> specificTaskProviders;
         private List<ICommandProvider> commandProviders;
         private List<ITaskHandlerProvider> taskHandlerProviders;
         private List<IExtensionProvider> extensionProviders;
@@ -41,8 +45,17 @@ namespace Flake.Extensibility
         {
             if (loadedExtensionNames.Add(Value.Name))
             {
-                commandProviders.AddRange(Value.CommandProviders);
-                taskHandlerProviders.AddRange(Value.TaskHandlerProviders);
+                foreach (var kvPair in Value.SpecificCommandProviders)
+                {
+                    specificCommandProviders[kvPair.Key] = kvPair.Value;
+                }
+                foreach (var kvPair in Value.SpecificTaskHandlerProviders)
+                {
+                    specificTaskProviders[kvPair.Key] = kvPair.Value;
+                }
+                taskHandlerProviders.AddRange(Value.GeneralTaskHandlerProviders);
+                commandProviders.AddRange(Value.GeneralCommandProviders);
+                taskHandlerProviders.AddRange(Value.GeneralTaskHandlerProviders);
                 extensionProviders.AddRange(Value.ExtensionProviders);
                 return true;
             }
@@ -56,6 +69,12 @@ namespace Flake.Extensibility
         public ResultOrError<ICommand, LogEntry> GetCommand(
             string Name, ICompilerLog Log)
         {
+            ICommandProvider specificProvider;
+            if (specificCommandProviders.TryGetValue(Name, out specificProvider))
+            {
+                return specificProvider.GetCommand(Name, Log);
+            }
+
             var errorMessages = new List<MarkupNode>();
             foreach (var item in commandProviders)
             {
@@ -81,6 +100,12 @@ namespace Flake.Extensibility
         public ResultOrError<ITaskHandler, LogEntry> GetHandler(
             TaskDescription Description, ICompilerLog Log)
         {
+            ITaskHandlerProvider specificProvider;
+            if (specificTaskProviders.TryGetValue(Description.Type, out specificProvider))
+            {
+                return specificProvider.GetHandler(Description, Log);
+            }
+
             var errorMessages = new List<MarkupNode>();
             foreach (var item in taskHandlerProviders)
             {

@@ -147,6 +147,7 @@
     <Compile Include="Extensibility\FlakeImportAttribute.cs" />
     <Compile Include="Extensibility\ExtensionManager.cs" />
     <Compile Include="Extensibility\IExtensionProvider.cs" />
+    <Compile Include="Extensibility\ExtensionManifest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
