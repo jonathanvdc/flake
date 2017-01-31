@@ -15,7 +15,7 @@ namespace Flake.Extensibility
         /// </summary>
         public ExtensionManifest()
         {
-            this.extensionPaths = new Dictionary<string, string>();
+            this.extensionPaths = new Dictionary<string, ExtensionPath>();
             this.specificCommandProviders = new Dictionary<string, string>();
             this.specificTaskProviders = new Dictionary<string, string>();
             this.generalCommandProviders = new HashSet<string>();
@@ -24,7 +24,7 @@ namespace Flake.Extensibility
         }
 
         [JsonProperty]
-        private Dictionary<string, string> extensionPaths;
+        private Dictionary<string, ExtensionPath> extensionPaths;
 
         [JsonProperty]
         private Dictionary<string, string> specificCommandProviders;
@@ -46,7 +46,7 @@ namespace Flake.Extensibility
         /// </summary>
         /// <value>The extension name-path map.</value>
         [JsonIgnore]
-        public IReadOnlyDictionary<string, string> ExtensionPaths
+        public IReadOnlyDictionary<string, ExtensionPath> ExtensionPaths
         {
             get { return extensionPaths; }
         }
@@ -117,9 +117,9 @@ namespace Flake.Extensibility
         /// Registers the providers of the extension with
         /// the given path in the manifest.
         /// </summary>
-        /// <param name="ExtensionPath">The extension's path.</param>
+        /// <param name="Path">The extension's path.</param>
         /// <param name="Value">The extension.</param>
-        public void Add(Extension Value, string ExtensionPath)
+        public void Add(Extension Value, ExtensionPath Path)
         {
             if (extensionPaths.ContainsKey(Value.Name))
             {
@@ -128,7 +128,7 @@ namespace Flake.Extensibility
                 Purge(Value.Name);
             }
 
-            extensionPaths[Value.Name] = ExtensionPath;
+            extensionPaths[Value.Name] = Path;
             RegisterProviders(
                 Value.Name, Value.SpecificCommandProviders.Keys,
                 specificCommandProviders);
