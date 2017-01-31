@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Flake
 {
@@ -16,6 +17,7 @@ namespace Flake
             this.forwardEdges = new Dictionary<T, HashSet<T>>();
             this.backwardEdges = new Dictionary<T, HashSet<T>>();
         }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Flake.Graph&lt;T&gt;"/> class.
         /// </summary>
@@ -26,7 +28,42 @@ namespace Flake
             this.backwardEdges = CopySetDictionary(Other.backwardEdges);
         }
 
+        [JsonProperty("edges")]
+        private Dictionary<T, HashSet<T>> Edges
+        {
+            get
+            {
+                return forwardEdges;
+            }
+            set
+            {
+                // Set the forward edges dictionary.
+                forwardEdges = value;
+
+                // Regenerate the backward edges dictionary.
+                backwardEdges = new Dictionary<T, HashSet<T>>();
+
+                // Create sets for all vertices.
+                foreach (var key in forwardEdges.Keys)
+                {
+                    backwardEdges.Add(key, new HashSet<T>());
+                }
+
+                // Populate the sets.
+                foreach (var kvPair in forwardEdges)
+                {
+                    foreach (var val in kvPair.Value)
+                    {
+                        backwardEdges[val].Add(kvPair.Key);
+                    }
+                }
+            }
+        }
+
+        [JsonIgnore]
         private Dictionary<T, HashSet<T>> forwardEdges;
+
+        [JsonIgnore]
         private Dictionary<T, HashSet<T>> backwardEdges;
 
         private static Dictionary<T, HashSet<T>> CopySetDictionary(
@@ -43,6 +80,7 @@ namespace Flake
         /// Gets all vertices in the graph.
         /// </summary>
         /// <value>The vertices.</value>
+        [JsonIgnore]
         public IEnumerable<T> Vertices
         {
             get { return forwardEdges.Keys; }
