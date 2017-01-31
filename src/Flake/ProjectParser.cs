@@ -94,7 +94,7 @@ namespace Flake
             {
                 string absPath = BasePath == null 
                     ? ProjectPath
-                    : new PathIdentifier(ProjectPath, BasePath).AbsolutePath.Path;
+                    : new PathIdentifier(BasePath, ProjectPath).AbsolutePath.Path;
                 result = ResultOrError<FileInfo, LogEntry>.CreateResult(
                     new FileInfo(absPath));
             }
