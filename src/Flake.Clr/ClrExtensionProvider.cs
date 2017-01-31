@@ -17,9 +17,14 @@ namespace Flake.Clr
         /// Initializes a new instance of the <see cref="Flake.Clr.ClrExtensionProvider"/> class.
         /// </summary>
         /// <param name="Manifest">The extension manifest.</param>
-        public ClrExtensionProvider(ExtensionManifest Manifest)
+        /// <param name="ExtensionDirectoryPath">The path to the extension directory.</param>
+        public ClrExtensionProvider(
+            ExtensionManifest Manifest,
+            string ExtensionDirectoryPath)
         {
             this.Manifest = Manifest;
+            this.ExtensionDirectoryPath = ExtensionDirectoryPath;
+            this.loadedAssemblies = new Dictionary<ExtensionPath, Assembly>();
         }
 
         /// <summary>
@@ -30,6 +35,14 @@ namespace Flake.Clr
         public ExtensionManifest Manifest { get; private set; }
 
         /// <summary>
+        /// Gets a path to the extension directory.
+        /// </summary>
+        /// <value>The extension directory path.</value>
+        public string ExtensionDirectoryPath { get; private set; }
+
+        private Dictionary<ExtensionPath, Assembly> loadedAssemblies;
+
+        /// <summary>
         /// Retrieves the extension with the given identifier.
         /// </summary>
         /// <returns>The extension.</returns>
@@ -37,7 +50,7 @@ namespace Flake.Clr
         /// <param name="Log">The log to which diagnostics may be sent.</param>
         public ResultOrError<Extension, LogEntry> GetExtension(string Identifier, ICompilerLog Log)
         {
-            string path;
+            ExtensionPath path;
             if (!Manifest.ExtensionPaths.TryGetValue(Identifier, out path))
             {
                 return ResultOrError<Extension, LogEntry>.CreateError(
@@ -47,11 +60,31 @@ namespace Flake.Clr
                         "appear in the local manifest."));
             }
 
-            var asm = Assembly.LoadFrom(path);
+            var asm = LoadAssembly(path);
             var ext = new ExtensionBuilder(Identifier);
             ImportTypes(asm.ExportedTypes, ext);
             return ResultOrError<Extension, LogEntry>.CreateResult(
                 ext.ToExtension());
+        }
+
+        private void LoadDependencies(ExtensionPath Path)
+        {
+            foreach (var dep in Manifest.GetRecursiveDependencies(Path))
+            {
+                LoadAssembly(dep);
+            }
+        }
+
+        private Assembly LoadAssembly(ExtensionPath Path)
+        {
+            Assembly asm;
+            if (!loadedAssemblies.TryGetValue(Path, out asm))
+            {
+                var file = Path.GetFile(ExtensionDirectoryPath);
+                asm = Assembly.LoadFrom(file.FullName);
+                loadedAssemblies[Path] = asm;
+            }
+            return asm;
         }
 
         private static void ImportTypes(
