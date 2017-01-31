@@ -117,6 +117,32 @@ namespace Flake
         }
 
         /// <summary>
+        /// Gets the set of all vertices that are directly or
+        /// indirectly reachable from the given vertex. The 
+        /// initial vertex is only included in the results if
+        /// it is in a cycle.
+        /// </summary>
+        /// <returns>The reachable vertices.</returns>
+        /// <param name="Value">The initial vertex.</param>
+        public IEnumerable<T> GetReachableVertices(T Value)
+        {
+            var results = new HashSet<T>();
+            AddReachableVertices(Value, results);
+            return results;
+        }
+
+        private void AddReachableVertices(T Value, HashSet<T> Reachable)
+        {
+            foreach (var v in GetOutgoingEdges(Value))
+            {
+                if (Reachable.Add(Value))
+                {
+                    AddReachableVertices(Value, Reachable); 
+                }
+            }
+        }
+
+        /// <summary>
         /// Determines if the graph contains the given vertex.
         /// </summary>
         /// <returns><c>true</c>, if the graph contains the given vertex, <c>false</c> otherwise.</returns>

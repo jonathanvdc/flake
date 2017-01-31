@@ -128,6 +128,33 @@ namespace Flake.Extensibility
         }
 
         /// <summary>
+        /// Gets the given path's set of dependencies.
+        /// </summary>
+        /// <returns>The dependencies.</returns>
+        /// <param name="Path">The path.</param>
+        public IEnumerable<ExtensionPath> GetDependencies(ExtensionPath Path)
+        {
+            if (extensionDependencies.ContainsVertex(Path))
+                return extensionDependencies.GetOutgoingEdges(Path);
+            else
+                return Enumerable.Empty<ExtensionPath>();
+        }
+
+        /// <summary>
+        /// Gets the given path's set of dependencies, and their dependencies,
+        /// and so on.
+        /// </summary>
+        /// <returns>The recursive dependencies.</returns>
+        /// <param name="Path">The path.</param>
+        public IEnumerable<ExtensionPath> GetRecursiveDependencies(ExtensionPath Path)
+        {
+            if (extensionDependencies.ContainsVertex(Path))
+                return extensionDependencies.GetReachableVertices(Path);
+            else
+                return Enumerable.Empty<ExtensionPath>();
+        }
+
+        /// <summary>
         /// Registers the providers of the extension with
         /// the given path in the manifest.
         /// </summary>
@@ -158,6 +185,22 @@ namespace Flake.Extensibility
 
             if (Value.ExtensionProviders.Any())
                 extensionProviders.Add(Value.Name);
+        }
+
+        /// <summary>
+        /// Makes the second path dependent on the first.
+        /// </summary>
+        /// <param name="DependencyPath">
+        /// The path to the dependency.
+        /// </param>
+        /// <param name="DependentPath">
+        /// The path to the file which depends on the dependency.
+        /// </param>
+        public void AddDependency(
+            ExtensionPath DependencyPath,
+            ExtensionPath DependentPath)
+        {
+            extensionDependencies.AddEdge(DependentPath, DependencyPath);
         }
 
         private static void RegisterProviders(
