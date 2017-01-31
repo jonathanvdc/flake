@@ -16,6 +16,7 @@ namespace Flake.Extensibility
         public ExtensionManifest()
         {
             this.extensionPaths = new Dictionary<string, ExtensionPath>();
+            this.extensionDependencies = new Graph<ExtensionPath>();
             this.specificCommandProviders = new Dictionary<string, string>();
             this.specificTaskProviders = new Dictionary<string, string>();
             this.generalCommandProviders = new HashSet<string>();
@@ -25,6 +26,9 @@ namespace Flake.Extensibility
 
         [JsonProperty]
         private Dictionary<string, ExtensionPath> extensionPaths;
+
+        [JsonProperty]
+        private Graph<ExtensionPath> extensionDependencies;
 
         [JsonProperty]
         private Dictionary<string, string> specificCommandProviders;
@@ -49,6 +53,16 @@ namespace Flake.Extensibility
         public IReadOnlyDictionary<string, ExtensionPath> ExtensionPaths
         {
             get { return extensionPaths; }
+        }
+
+        /// <summary>
+        /// Gets the dependency graph for all extensions and their dependencies.
+        /// </summary>
+        /// <value>The extension dependencies.</value>
+        [JsonIgnore]
+        public Graph<ExtensionPath> ExtensionDependencies
+        {
+            get { return extensionDependencies; }
         }
 
         /// <summary>
@@ -165,7 +179,13 @@ namespace Flake.Extensibility
         /// <returns><c>true</c> if the manifest has changed; otherwise, <c>false</c>.</returns>
         public bool Purge(string ExtensionName)
         {
-            return extensionPaths.Remove(ExtensionName)
+            ExtensionPath path;
+            bool foundPath = extensionPaths.TryGetValue(ExtensionName, out path);
+            if (foundPath)
+                extensionDependencies.RemoveVertex(path);
+
+            return foundPath
+                | extensionPaths.Remove(ExtensionName)
                 | PurgeValueFrom(specificCommandProviders, ExtensionName)
                 | PurgeValueFrom(specificTaskProviders, ExtensionName)
                 | generalCommandProviders.Remove(ExtensionName)
