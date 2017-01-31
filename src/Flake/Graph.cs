@@ -231,6 +231,25 @@ namespace Flake
                 return false;
             }
         }
+
+        /// <summary>
+        /// Adds all edges and vertices from the given graph to
+        /// this graph.
+        /// </summary>
+        /// <param name="Other">
+        /// The graph that will be added to this graph.
+        /// </param>
+        public void UnionWith(Graph<T> Other)
+        {
+            foreach (var edge in Other.forwardEdges)
+            {
+                AddVertex(edge.Key);
+                foreach (var v in edge.Value)
+                {
+                    AddEdge(edge.Key, v);
+                }
+            }
+        }
     }
 }
 
