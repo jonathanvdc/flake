@@ -24,7 +24,7 @@ namespace Flake
             this.HandlerProvider = HandlerProvider;
             this.Log = Log;
             this.projectCache = 
-                new Dictionary<ProjectIdentifier, ResultOrError<Project, LogEntry>>();
+                new Dictionary<FileIdentifier, ResultOrError<Project, LogEntry>>();
             this.jsonReader = new JsonSerializer();
         }
 
@@ -40,7 +40,7 @@ namespace Flake
         /// <value>The log.</value>
         public ICompilerLog Log { get; private set; }
 
-        private Dictionary<ProjectIdentifier, ResultOrError<Project, LogEntry>> projectCache;
+        private Dictionary<FileIdentifier, ResultOrError<Project, LogEntry>> projectCache;
         private JsonSerializer jsonReader;
 
         /// <summary>
@@ -68,11 +68,11 @@ namespace Flake
         /// The path to which the project path is relative.
         /// </param>
         /// <param name="ProjectPath">The project path.</param>
-        public static ResultOrError<ProjectIdentifier, LogEntry> GetIdentifier(
+        public static ResultOrError<FileIdentifier, LogEntry> GetIdentifier(
             string ProjectPath, string BasePath)
         {
             return GetFileInfo(ProjectPath, BasePath).MapResult(
-                info => new ProjectIdentifier(info));
+                info => new FileIdentifier(info));
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Flake
         /// </summary>
         /// <returns>The project identifier.</returns>
         /// <param name="ProjectPath">The project path.</param>
-        public static ResultOrError<ProjectIdentifier, LogEntry> GetIdentifier(
+        public static ResultOrError<FileIdentifier, LogEntry> GetIdentifier(
             string ProjectPath)
         {
             return GetIdentifier(ProjectPath, null);
@@ -152,7 +152,7 @@ namespace Flake
         /// <param name="Identifier">The project's identifier.</param>
         /// <param name="TaskName">The task's name.</param>
         public static TaskIdentifier GetIdentifier(
-            ProjectIdentifier Identifier, string TaskName)
+            FileIdentifier Identifier, string TaskName)
         {
             return new TaskIdentifier(Identifier, TaskName);
         }
@@ -177,7 +177,7 @@ namespace Flake
         /// </summary>
         /// <param name="Identifier">The identifier for the project to parse.</param>
         public ResultOrError<Project, LogEntry> Parse(
-            ProjectIdentifier Identifier)
+            FileIdentifier Identifier)
         {
             ResultOrError<Project, LogEntry> result;
             if (!projectCache.TryGetValue(Identifier, out result))
@@ -190,7 +190,7 @@ namespace Flake
         }
 
         private ResultOrError<Project, LogEntry> ParseProject(
-            ProjectIdentifier Identifier)
+            FileIdentifier Identifier)
         {
             if (!Identifier.File.Exists)
             {

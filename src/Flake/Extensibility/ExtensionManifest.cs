@@ -16,6 +16,7 @@ namespace Flake.Extensibility
         public ExtensionManifest()
         {
             this.extensionPaths = new Dictionary<string, ExtensionPath>();
+            this.extensionManagement = new Dictionary<string, ExtensionManagementScheme>();
             this.extensionDependencies = new Graph<ExtensionPath>();
             this.specificCommandProviders = new Dictionary<string, string>();
             this.specificTaskProviders = new Dictionary<string, string>();
@@ -26,6 +27,9 @@ namespace Flake.Extensibility
 
         [JsonProperty]
         private Dictionary<string, ExtensionPath> extensionPaths;
+
+        [JsonProperty]
+        private Dictionary<string, ExtensionManagementScheme> extensionManagement;
 
         [JsonProperty]
         private Graph<ExtensionPath> extensionDependencies;
@@ -44,6 +48,16 @@ namespace Flake.Extensibility
 
         [JsonProperty]
         private HashSet<string> extensionProviders;
+
+        /// <summary>
+        /// Gets the names of all extensions.
+        /// </summary>
+        /// <value>The extension names.</value>
+        [JsonIgnore]
+        public IEnumerable<string> ExtensionNames
+        {
+            get { return extensionPaths.Keys; }
+        }
 
         /// <summary>
         /// Gets a mapping of extension names to their paths.
@@ -170,6 +184,7 @@ namespace Flake.Extensibility
             }
 
             extensionPaths[Value.Name] = Path;
+            extensionManagement[Value.Name] = ExtensionManagementScheme.Automatic;
             RegisterProviders(
                 Value.Name, Value.SpecificCommandProviders.Keys,
                 specificCommandProviders);
@@ -185,6 +200,17 @@ namespace Flake.Extensibility
 
             if (Value.ExtensionProviders.Any())
                 extensionProviders.Add(Value.Name);
+        }
+
+        /// <summary>
+        /// Changes the extension management scheme of the extension with the given name.
+        /// </summary>
+        /// <param name="ExtensionName">The name of the extension whose management scheme is to be changed.</param>
+        /// <param name="Scheme">The management scheme to change.</param>
+        public void ChangeExtensionManagementScheme(
+            string ExtensionName, ExtensionManagementScheme Scheme)
+        {
+            extensionManagement[ExtensionName] = Scheme;
         }
 
         /// <summary>
@@ -229,6 +255,7 @@ namespace Flake.Extensibility
 
             return foundPath
                 | extensionPaths.Remove(ExtensionName)
+                | extensionManagement.Remove(ExtensionName)
                 | PurgeValueFrom(specificCommandProviders, ExtensionName)
                 | PurgeValueFrom(specificTaskProviders, ExtensionName)
                 | generalCommandProviders.Remove(ExtensionName)

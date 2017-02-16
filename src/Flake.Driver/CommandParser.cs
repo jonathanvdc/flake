@@ -135,7 +135,7 @@ namespace Flake.Driver
         /// <param name="Identifier">The project identifier.</param>
         /// <param name="Command">The task name.</param>
         public ICommand ParseCommandSpec(
-            ProjectIdentifier Identifier, string TaskName)
+            FileIdentifier Identifier, string TaskName)
         {
             return new RunTaskCommand(
                 TaskHandlerProvider, 
@@ -146,7 +146,7 @@ namespace Flake.Driver
         /// Tries to find the default project identifier.
         /// </summary>
         /// <returns>The default project identifier.</returns>
-        public static ProjectIdentifier TryFindDefaultProject()
+        public static FileIdentifier TryFindDefaultProject()
         {
             var projIdent = ProjectParser.GetIdentifier("flake.json");
             if (!projIdent.IsError && projIdent.ResultOrDefault.File.Exists)

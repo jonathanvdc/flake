@@ -6,13 +6,13 @@ namespace Flake
     /// <summary>
     /// A unique identifier for a project.
     /// </summary>
-    public sealed class ProjectIdentifier : IEquatable<ProjectIdentifier>
+    public sealed class FileIdentifier : IEquatable<FileIdentifier>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Flake.ProjectIdentifier"/> class.
+        /// Initializes a new instance of the <see cref="Flake.FileIdentifier"/> class.
         /// </summary>
         /// <param name="File">The file that defines this project identifier.</param>
-        public ProjectIdentifier(FileInfo File)
+        public FileIdentifier(FileInfo File)
         {
             this.File = File;
             this.cachedFullPath = new Lazy<string>(GetFullPath);
@@ -39,7 +39,7 @@ namespace Flake
         /// <param name="First">The first project identifier.</param>
         /// <param name="Second">The second project identifier.</param>
         public static bool operator ==(
-            ProjectIdentifier First, ProjectIdentifier Second)
+            FileIdentifier First, FileIdentifier Second)
         {
             return object.Equals(First, Second);
         }
@@ -47,38 +47,38 @@ namespace Flake
         /// <param name="First">The first project identifier.</param>
         /// <param name="Second">The second project identifier.</param>
         public static bool operator !=(
-            ProjectIdentifier First, ProjectIdentifier Second)
+            FileIdentifier First, FileIdentifier Second)
         {
             return !object.Equals(First, Second);
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="Flake.ProjectIdentifier"/> is equal to the current <see cref="Flake.ProjectIdentifier"/>.
+        /// Determines whether the specified <see cref="Flake.FileIdentifier"/> is equal to the current <see cref="Flake.FileIdentifier"/>.
         /// </summary>
-        /// <param name="Other">The <see cref="Flake.ProjectIdentifier"/> to compare with the current <see cref="Flake.ProjectIdentifier"/>.</param>
-        /// <returns><c>true</c> if the specified <see cref="Flake.ProjectIdentifier"/> is equal to the current
-        /// <see cref="Flake.ProjectIdentifier"/>; otherwise, <c>false</c>.</returns>
-        public bool Equals(ProjectIdentifier Other)
+        /// <param name="Other">The <see cref="Flake.FileIdentifier"/> to compare with the current <see cref="Flake.FileIdentifier"/>.</param>
+        /// <returns><c>true</c> if the specified <see cref="Flake.FileIdentifier"/> is equal to the current
+        /// <see cref="Flake.FileIdentifier"/>; otherwise, <c>false</c>.</returns>
+        public bool Equals(FileIdentifier Other)
         {
             return FullPath.Equals(Other.FullPath, StringComparison.InvariantCulture);
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="Flake.ProjectIdentifier"/>.
+        /// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="Flake.FileIdentifier"/>.
         /// </summary>
-        /// <param name="Other">The <see cref="System.Object"/> to compare with the current <see cref="Flake.ProjectIdentifier"/>.</param>
+        /// <param name="Other">The <see cref="System.Object"/> to compare with the current <see cref="Flake.FileIdentifier"/>.</param>
         /// <returns><c>true</c> if the specified <see cref="System.Object"/> is equal to the current
-        /// <see cref="Flake.ProjectIdentifier"/>; otherwise, <c>false</c>.</returns>
+        /// <see cref="Flake.FileIdentifier"/>; otherwise, <c>false</c>.</returns>
         public override bool Equals(object Other)
         {
-            if (Other is ProjectIdentifier)
-                return Equals((ProjectIdentifier)Other);
+            if (Other is FileIdentifier)
+                return Equals((FileIdentifier)Other);
             else
                 return false;
         }
 
         /// <summary>
-        /// Serves as a hash function for a <see cref="Flake.ProjectIdentifier"/> object.
+        /// Serves as a hash function for a <see cref="Flake.FileIdentifier"/> object.
         /// </summary>
         /// <returns>A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
         /// hash table.</returns>
@@ -88,9 +88,9 @@ namespace Flake
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String"/> that represents the current <see cref="Flake.ProjectIdentifier"/>.
+        /// Returns a <see cref="System.String"/> that represents the current <see cref="Flake.FileIdentifier"/>.
         /// </summary>
-        /// <returns>A <see cref="System.String"/> that represents the current <see cref="Flake.ProjectIdentifier"/>.</returns>
+        /// <returns>A <see cref="System.String"/> that represents the current <see cref="Flake.FileIdentifier"/>.</returns>
         public override string ToString()
         {
             return FullPath;

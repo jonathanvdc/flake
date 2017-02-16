@@ -13,7 +13,7 @@ namespace Flake
         /// </summary>
         /// <param name="Project">The project that defines this task.</param>
         /// <param name="TaskName">This task's name.</param>
-        public TaskIdentifier(ProjectIdentifier Project, string TaskName)
+        public TaskIdentifier(FileIdentifier Project, string TaskName)
         {
             this.Project = Project;
             this.TaskName = TaskName;
@@ -23,7 +23,7 @@ namespace Flake
         /// Gets the project's identifier.
         /// </summary>
         /// <value>The project.</value>
-        public ProjectIdentifier Project { get; private set; }
+        public FileIdentifier Project { get; private set; }
 
         /// <summary>
         /// Gets the task's name.

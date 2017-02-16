@@ -14,7 +14,7 @@ namespace Flake
         /// <param name="Identifier">The project's identifier.</param>
         /// <param name="Tasks">The project's list of tasks.</param>
         public Project(
-            ProjectIdentifier Identifier, 
+            FileIdentifier Identifier, 
             IReadOnlyDictionary<string, ITask> Tasks)
         {
             this.Identifier = Identifier;
@@ -25,7 +25,7 @@ namespace Flake
         /// Gets this project's identifier.
         /// </summary>
         /// <value>The identifier.</value>
-        public ProjectIdentifier Identifier { get; private set; }
+        public FileIdentifier Identifier { get; private set; }
 
         /// <summary>
         /// Gets this project's list of tasks.

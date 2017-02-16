@@ -128,7 +128,6 @@
     <Compile Include="ITask.cs" />
     <Compile Include="SerializedTaskHandler.cs" />
     <Compile Include="TaskIdentifier.cs" />
-    <Compile Include="ProjectIdentifier.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="ProjectParser.cs" />
     <Compile Include="ResultOrError.cs" />
@@ -152,6 +151,10 @@
     <Compile Include="Providers\SingleCommandProvider.cs" />
     <Compile Include="Providers\SingleTaskHandlerProvider.cs" />
     <Compile Include="Extensibility\ExtensionPath.cs" />
+    <Compile Include="FileIdentifier.cs" />
+    <Compile Include="Extensibility\IExtensionRepository.cs" />
+    <Compile Include="Extensibility\ExtensionManagementScheme.cs" />
+    <Compile Include="Extensibility\ExtensionManifestView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
